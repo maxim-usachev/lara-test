@@ -9,6 +9,7 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
 
-    Route::get('/profile', [UserProfileController::class, 'getProfile']);
-    Route::patch('/profile', [UserProfileController::class, 'patchProfile']);
+    Route::get('/profile/for_user/{userId}', [UserProfileController::class, 'getProfile']);
+    Route::patch('/profile/for_user/{userId}', [UserProfileController::class, 'patchProfile']);
 });
+

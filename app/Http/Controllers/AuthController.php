@@ -6,10 +6,10 @@ use App\DTO\UserLoginDTO;
 use App\DTO\UserRegisterDTO;
 use App\Exceptions\UserLoginValidationException;
 use App\Exceptions\UserRegistrationException;
-use App\Services\UserLoginService;
-use App\Services\UserLogoutService;
-use App\Services\UserRefreshTokenService;
-use App\Services\UserRegisterService;
+use App\Services\Auth\UserLoginService;
+use App\Services\Auth\UserLogoutService;
+use App\Services\Auth\UserRefreshTokenService;
+use App\Services\Auth\UserRegisterService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\UnauthorizedException;
@@ -35,7 +35,7 @@ class AuthController extends Controller
         UserLogoutService $userLogoutService,
         UserRefreshTokenService $userRefreshTokenService
     ) {
-        $this->middleware('auth:api', ['except' => ['login', 'register']]);
+        //$this->middleware('auth:api', ['except' => ['login', 'register']]);
         $this->userRegisterService = $userRegisterService;
         $this->userLoginService = $userLoginService;
         $this->userLogoutService = $userLogoutService;
