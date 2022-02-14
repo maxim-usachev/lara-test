@@ -37,6 +37,10 @@ class UserProfileUpdateService
             throw new BadRequestException($validator->errors()->toJson(JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE), 422);
         }
 
+        if($userId !== auth()->user()->id){
+            throw new BadRequestException('Forbidden', 403);
+        }
+
         /** @var UserProfile $userProfile */
         $userProfile = $this->userProfileGetService->__invoke($userId);
         $userProfile->update($userProfileUpdateDTO->toArray());
