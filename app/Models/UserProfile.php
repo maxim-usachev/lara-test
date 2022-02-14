@@ -9,9 +9,9 @@ class UserProfile extends Model
 {
     use HasFactory;
 
-    private string $lang;
+    private string $lang = 'ru';
 
-    private string $timezone;
+    private string $timezone = '+3';
 
     protected $table = 'user_profile';
 
@@ -19,6 +19,19 @@ class UserProfile extends Model
         'lang',
         'timezone'
     ];
+
+    /**
+     * @param string $lang
+     * @param string $timezone
+     * @return UserProfile
+     */
+    public static function createForNewUser(int $userId): self
+    {
+        $userProfile = new self();
+        $userProfile->user_id = $userId;
+        $userProfile->save();
+        return $userProfile;
+    }
 
     /**
      * @return string
