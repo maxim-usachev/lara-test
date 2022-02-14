@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class RemoveNameFromUsers extends Migration
+class AddUserProfileDefaultValues extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,10 @@ class RemoveNameFromUsers extends Migration
      */
     public function up()
     {
-        Schema::dropColumns('users', ['name']);
+        Schema::table('user_profile', function (Blueprint $table) {
+            $table->string('timezone')->default('+3')->change();
+            $table->string('lang')->default('ru')->change();
+        });
     }
 
     /**
@@ -23,8 +26,6 @@ class RemoveNameFromUsers extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->addColumn('string', 'name')->nullable();
-        });
+        //
     }
 }

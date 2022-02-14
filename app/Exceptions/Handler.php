@@ -6,6 +6,7 @@ use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Prophecy\Exception\Doubler\MethodNotFoundException;
+use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
@@ -56,6 +57,7 @@ class Handler extends ExceptionHandler
         return match (get_class($exception)) {
             ModelNotFoundException::class, NotFoundHttpException::class => response()->json(['message' => 'Not Found!'], 404),
             MethodNotFoundException::class => response()->json(['message' => 'Not Found!'], 404),
+            BadRequestException::class => response()->json(['message' => $exception->getMessage()], $exception->getCode()),
             default => parent::render($request, $exception),
         };
     }
